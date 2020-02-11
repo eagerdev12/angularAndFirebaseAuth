@@ -1,13 +1,40 @@
-<!--begin::Head-->
+<div class="kt-login__body">
+	<div class="kt-login__form">
+		<div class="form-kt">
+			<div *ngIf="!staticAlertClosed">
+				<kt-auth-notice></kt-auth-notice>	
+			</div>
+			
+			<!-- <ngb-alert *ngIf="!staticAlertClosed" [type]="'brand'" (close)="staticAlertClosed = true">Check out our awesome new features!</ngb-alert> -->
+			<ngx-auth-firebaseui appearance="outline"
+				[guestEnabled] = false
+				[providers] = "[providers.Google, providers.Facebook, providers.Twitter]"
+				[goBackURL] = "goBackURL"
+				(onSuccess)="onSuccess($event)"
+				(onError)="onError($event)"
+				>
+			</ngx-auth-firebaseui>
+			<!-- <ngx-auth-firebaseui-login
+				[providers] = "[providers.Google, providers.Facebook, providers.Twitter]"
+				[registrationEnabled] = "true"
+				[messageOnAuthSuccess] = "'login successfully'"
+				[messageOnAuthError] = "'login failed'"
+				(onSuccess)="onSuccess($event)"
+				(onForgotPassword)="onCreateAccount()"
+				(onCreateAccountRequested) = "onCreateAccount()"
+			></ngx-auth-firebaseui-login> -->
+		</div>
+	</div>
+</div>
+<!-- <button class="btn btn-primary" (click)="test()">this is for test</button> -->
+
+<!-- 
 <div class="kt-login__head">
 	<span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
 	<a href="javascript:;" routerLink="/auth/register" class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
 </div>
-<!--end::Head-->
 
-<!--begin::Body-->
 <div class="kt-login__body">
-	<!--begin::Signin-->
 	<div class="kt-login__form">
 		<div class="kt-login__title">
 			<h3>Sign In</h3>
@@ -15,7 +42,6 @@
 
 		<kt-auth-notice></kt-auth-notice>
 
-		<!--begin::Form-->
 		<form class="kt-form" [formGroup]="loginForm" autocomplete="off">
 			<div class="form-group">
 				<mat-form-field>
@@ -50,18 +76,14 @@
 					</mat-error>
 				</mat-form-field>
 			</div>
-			<!--begin::Action-->
 			<div class="kt-login__actions">
 				<a href="javascript:;" routerLink="/auth/forgot-password" class="kt-link kt-login__link-forgot">
 					{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
 				</a>
 				<button (click)="submit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
 			</div>
-			<!--end::Action-->
 		</form>
-		<!--end::Form-->
 
-		<!--begin::Divider-->
 		<div class="kt-login__divider">
 			<div class="kt-divider">
 				<span></span>
@@ -69,9 +91,7 @@
 				<span></span>
 			</div>
 		</div>
-		<!--end::Divider-->
 
-		<!--begin::Options-->
 		<div class="kt-login__options">
 			<a href="https://www.facebook.com/keenthemes/" target="_blank" class="btn btn-primary kt-btn">
 				<i class="fab fa-facebook-f"></i>
@@ -88,8 +108,5 @@
 				Google
 			</a>
 		</div>
-		<!--end::Options-->
 	</div>
-	<!--end::Signin-->
-</div>
-<!--end::Body-->
+</div> -->

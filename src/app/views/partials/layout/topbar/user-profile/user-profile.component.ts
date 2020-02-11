@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 // State
 import { AppState } from '../../../../../core/reducers';
-import { currentUser, Logout, User } from '../../../../../core/auth';
+import { currentUser, Logout, User, AuthService } from '../../../../../core/auth';
 
 @Component({
 	selector: 'kt-user-profile',
@@ -26,7 +26,9 @@ export class UserProfileComponent implements OnInit {
 	 *
 	 * @param store: Store<AppState>
 	 */
-	constructor(private store: Store<AppState>) {
+	constructor(
+		private store: Store<AppState>,
+		private auth: AuthService,) {
 	}
 
 	/**
@@ -45,5 +47,6 @@ export class UserProfileComponent implements OnInit {
 	 */
 	logout() {
 		this.store.dispatch(new Logout());
+		this.auth.signOut();
 	}
 }

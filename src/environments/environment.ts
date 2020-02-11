@@ -5,9 +5,18 @@
 export const environment = {
   production: false,
   isMockEnabled: true, // You have to switch this, when your real back-end is done
-  authTokenKey: 'authce9d77b308c149d5992a80073637e4d5'
+  authTokenKey: 'authce9d77b308c149d5992a80073637e4d5',
+  firebase:{
+    apiKey: 'AIzaSyBoJHc65a_DKoBIP-K-B0R3NiIYsM0R7C0',
+    authDomain: 'project-test-4676e.firebaseapp.com',
+    databaseURL: 'https://project-test-4676e.firebaseio.com',
+    projectId: 'project-test-4676e',
+    storageBucket: 'project-test-4676e.appspot.com',
+    messagingSenderId: '244565579630',
+    appId: '1:244565579630:web:95894eaf847f0b3c8e137f',
+    measurementId: 'G-MS8RN2MLNP'
+  }
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

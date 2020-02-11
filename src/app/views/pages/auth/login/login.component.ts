@@ -13,6 +13,8 @@ import { AppState } from '../../../../core/reducers';
 // Auth
 import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
 
+import { AuthProvider, Theme } from 'ngx-auth-firebaseui';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 /**
  * ! Just example => Should be removed in development
  */
@@ -33,9 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 
+	providers = AuthProvider;
+	themes = Theme;
 	private unsubscribe: Subject<any>;
 
 	private returnUrl: any;
+	goBackURL = 'http://localhost:4200/auth/login'
+	staticAlertClosed = false;
 
 	// Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -78,6 +84,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params.returnUrl || '/';
 		});
+
+		this.staticAlertClosed = true;
 	}
 
 	/**
@@ -144,6 +152,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(user => {
 					if (user) {
+						console.log('this is fake user: ', user);
+						console.log('this is returnUrl: ', this.returnUrl);
 						this.store.dispatch(new Login({authToken: user.accessToken}));
 						this.router.navigateByUrl(this.returnUrl); // Main page
 					} else {
@@ -173,5 +183,36 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 		const result = control.hasError(validationType) && (control.dirty || control.touched);
 		return result;
+	}
+
+	onSuccess(event) {
+		console.log('this is success event: ',event);
+		if (event.emailVerified) {
+			this.store.dispatch(new Login({authToken: 'access-token-8f3ae836da744329a6f93bf20594b5cc'}));
+			console.log('this is returnUrl: ', this.returnUrl, )
+			this.router.navigateByUrl('/dashboard');
+		} else {
+			
+		}
+
+    }
+
+    onError(event) {
+		console.log('this si error event: ',event.message);
+		this.staticAlertClosed = false;
+		this.authNoticeService.setNotice(event.message, 'danger');
+
+		setTimeout(() => {
+			this.staticAlertClosed = true;
+			console.log('th', this.staticAlertClosed)
+		}, 2000);
+	}
+	
+	onCreateAccount() {
+		console.log('requested create account: ');
+	}
+
+	test() {
+		this.auth.signOut();
 	}
 }

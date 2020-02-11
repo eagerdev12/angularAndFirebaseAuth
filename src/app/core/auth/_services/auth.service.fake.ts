@@ -15,6 +15,8 @@ import { User } from '../_models/user.model';
 import { Permission } from '../_models/permission.model';
 import { Role } from '../_models/role.model';
 
+import { AngularFireAuth } from "@angular/fire/auth";
+
 const API_USERS_URL = 'api/users';
 const API_PERMISSION_URL = 'api/permissions';
 const API_ROLES_URL = 'api/roles';
@@ -22,7 +24,9 @@ const API_ROLES_URL = 'api/roles';
 @Injectable()
 export class AuthService {
     constructor(private http: HttpClient,
-                private httpUtils: HttpUtilsService) { }
+                private httpUtils: HttpUtilsService,
+                public afAuth: AngularFireAuth
+                ) { }
 
     // Authentication/Authorization
     login(email: string, password: string): Observable<User> {
@@ -283,5 +287,12 @@ export class AuthService {
             // Let the app keep running by returning an empty result.
             return of(result);
         };
+    }
+
+    signOut() {
+        return this.afAuth.auth.signOut().then(() => {
+            // this.router.navigate(['sign-in']);
+            console.log('signout  in authService: ');
+        })
     }
 }

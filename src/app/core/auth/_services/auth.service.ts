@@ -9,13 +9,18 @@ import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 
+import { AngularFireAuth } from "@angular/fire/auth";
+
 const API_USERS_URL = 'api/users';
 const API_PERMISSION_URL = 'api/permissions';
 const API_ROLES_URL = 'api/roles';
 
 @Injectable()
 export class AuthService {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        public afAuth: AngularFireAuth
+        ) {}
     // Authentication/Authorization
     login(email: string, password: string): Observable<User> {
         return this.http.post<User>(API_USERS_URL, { email, password });
@@ -150,6 +155,13 @@ export class AuthService {
 	 * @param operation - name of the operation that failed
  	 * @param result - optional value to return as the observable result
  	 */
+    SignOut() {
+        return this.afAuth.auth.signOut().then(() => {
+            // this.router.navigate(['sign-in']);
+            console.log('signout  in authService: ');
+        })
+    }
+
     private handleError<T>(operation = 'operation', result?: any) {
         return (error: any): Observable<any> => {
             // TODO: send the error to remote logging infrastructure
